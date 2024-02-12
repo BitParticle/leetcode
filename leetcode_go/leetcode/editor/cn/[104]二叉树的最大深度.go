@@ -1,5 +1,5 @@
 package main
-//leetcode submit region begin(Prohibit modification and deletion)
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -8,22 +8,31 @@ package main
  *     Right *TreeNode
  * }
  */
-var res int
+
 func maxDepth(root *TreeNode) int {
-	if root==nil{
-		return 0
-	}
-	leftMax := maxDepth(root.Left)
-	rightMax := maxDepth(root.Right)
-	res = max(leftMax, rightMax)+1
+	res := 0
+	depth := 0
+	traverse(root, &res, &depth)
 	return res
 }
 
-func max(a int, b int) int{
-	if a>b{
+func traverse(root *TreeNode, res *int, depth *int) {
+	if root == nil {
+		return
+	}
+	*depth++
+	if root.Right == nil && root.Left == nil {
+		*res = max(*res, *depth)
+	}
+	traverse(root.Left, res, depth)
+	traverse(root.Right, res, depth)
+	*depth--
+}
+
+func max(a int, b int) int {
+	if a > b {
 		return a
 	} else {
 		return b
 	}
 }
-//leetcode submit region end(Prohibit modification and deletion)
